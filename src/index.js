@@ -10,7 +10,9 @@ dotenv.config({
 
 
 
-connectDB()
+connectDB().then(()=>{
+  console.log("server running")
+})
 
 // const app = express();
 
