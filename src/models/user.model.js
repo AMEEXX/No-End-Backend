@@ -39,7 +39,6 @@ const videoSchema = new Schema ({
         type : Schema.Types.ObjectId,
         ref : "User"
     }
-
 }, {timestamps : true
 })
 
@@ -48,12 +47,27 @@ userSchmea.methods.isPasswordCorrect = async function (password){
     await  bcrypt.compare(password, this.password)
 }
 userSchmea.methods.generateAccessTokens = fucntion() {
-    
+    jwt.sign({
+        _id: this._id,
+        email: this.email,
+        username : this.username
+    },
+    process.env.ACESS_TOKEN_SECRET,
+    {
+        expiresIn: process.env>ACCESS_TOKEN_SECRET
+    }
+    )
 }
 userSchmea.methods.generateRefreshTokens = fucntion() {
-     
+    jwt.sign({
+        _id: this._id
+    },
+    process.env.REFRESH_TOKEN_SECRET,
+    {
+        expiresIn : REFRESH_TOKEN_EXPIRY
+    }
+)     
 }
-
 const UserSchema = new Schema(
     {
         username: {
